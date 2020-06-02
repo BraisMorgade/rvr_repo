@@ -3,13 +3,28 @@
 #include <string.h>
 #include <iostream>
 
-class App{
+class App
+{
 public:
+
+    static App *getInstance();
+    void run(std::string appName);
+    SDL_Window *getWindow()
+    {
+        return window;
+    }
+    SDL_Renderer *getRender()
+    {
+        return render;
+    }
+
+private:
     App();
     ~App();
-    void run(std::string appName);
-private:
+    App(App &) = delete;
+    App &operator=(const App &) = delete;
     bool quit;
-    SDL_Window* window;
-    SDL_Renderer* render;
+    SDL_Window *window;
+    SDL_Renderer *render;
+    static App *instance;
 };

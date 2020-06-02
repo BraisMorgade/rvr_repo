@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cc App.cc App.h
+OBJS = main.cpp App.h GameObject.h GameObjectTest.h GameState.h GameStateTest.h GameStateMachine.h App.cpp GameObjectTest.cpp GameStateMachine.cpp GameStateTest.cpp GameState.cpp
 
 #CC specifies which compiler we're using
 CC = g++

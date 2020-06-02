@@ -5,8 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    App app;
-    app.run("Juego guapisimo de lucha en algun momento en el futuro pero ahora solo es una foto de Kojima");
+    App::getInstance()->run("Juego guapisimo en algun momento en el futuro pero ahora solo es una foto de Kojima");
 
     return 0;
 }
