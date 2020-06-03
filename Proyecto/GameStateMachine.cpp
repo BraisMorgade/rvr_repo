@@ -1,19 +1,12 @@
 #include "GameStateMachine.h"
 #include "GameStateTest.h"
+#include "App.h"
 
-
-GameStateMachine* GameStateMachine::instance=0;
-
-GameStateMachine::GameStateMachine(){
-    states["test"]= new GameStateTest();
-}
-
-GameStateMachine* GameStateMachine::getInstance()
-{
-    if(instance==nullptr){
-        instance= new GameStateMachine();
-    }
-    return instance;
+GameStateMachine::GameStateMachine(App* ap){
+    app=ap;
+    GameState* aux= new GameStateTest(ap);
+    states.emplace("test", aux);
+    currentState=aux;
 }
 
 GameStateMachine::~GameStateMachine(){

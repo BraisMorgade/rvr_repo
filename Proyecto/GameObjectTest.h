@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GameObjectTest_h
+#define GameObjectTest_h
 #include "GameObject.h"
 
 class GameObjectTest : public GameObject{
@@ -15,3 +16,4 @@ private:
     int posX, posY;
     int height, width;
 };
+#endif

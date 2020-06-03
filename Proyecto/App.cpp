@@ -1,7 +1,6 @@
 #include "App.h"
 #include "GameStateMachine.h"
 #include "GameState.h"
-App* App::instance=0;
 
 App::App()
 {
@@ -10,22 +9,12 @@ App::App()
     window = nullptr;
 }
 
-App* App::getInstance(){
-    if (instance == nullptr)
-    {
-        instance = new App();
-    }
-    return instance;
-}
-
 App::~App()
 {
 }
 void App::run(std::string appName)
 {
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDL2
-
-    SDL_Window *window; // Declare a pointer to an SDL_Window
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(
@@ -37,18 +26,17 @@ void App::run(std::string appName)
         SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL //    flags - see below
     );
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
+    render = SDL_CreateRenderer(window, -1, 0);
 
     SDL_Event event;
 
-    GameStateMachine::getInstance()->getCurrentState()->start();
+    stateMachine=new GameStateMachine(this);
 
+    stateMachine->getCurrentState()->start();
     while (!quit)
     {
-        GameStateMachine::getInstance()->getCurrentState()
-        ->update();
-        GameStateMachine::getInstance()->getCurrentState()
-        ->render(render);
+        stateMachine->getCurrentState()->update();
+        stateMachine->getCurrentState()->render(render);
         while(SDL_PollEvent(&event)){
             switch (event.type)
             {
@@ -56,12 +44,10 @@ void App::run(std::string appName)
                 quit = true;
                 break;
             default:
-                GameStateMachine::getInstance()->getCurrentState()
-                ->handleInput(event);
+                stateMachine->getCurrentState()->handleInput(event);
                 break;
             }
         }
-
     }
 
     SDL_DestroyRenderer(render);

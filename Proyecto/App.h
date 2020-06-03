@@ -1,13 +1,17 @@
+#ifndef App_h
+#define App_h
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string.h>
 #include <iostream>
 
+class GameStateMachine;
+
 class App
 {
 public:
-
-    static App *getInstance();
+    App();
+    ~App();
     void run(std::string appName);
     SDL_Window *getWindow()
     {
@@ -19,12 +23,10 @@ public:
     }
 
 private:
-    App();
-    ~App();
-    App(App &) = delete;
-    App &operator=(const App &) = delete;
     bool quit;
     SDL_Window *window;
     SDL_Renderer *render;
-    static App *instance;
+    GameStateMachine* stateMachine;
+
 };
+#endif

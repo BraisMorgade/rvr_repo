@@ -1,16 +1,21 @@
-#pragma once
+#ifndef GameState_h
+#define GameState_h
 #include <list>
 #include "GameObject.h"
 
+class App;
+
 class GameState{
 public:
-    GameState();
-    ~GameState();
-    void start();
-    void update();
-    void render(SDL_Renderer* render);
-    void handleInput(SDL_Event& event);
-    void end();
+    GameState(App* ap);
+    ~GameState(){};
+    virtual void start();
+    virtual void update();
+    virtual void render(SDL_Renderer* render);
+    virtual void handleInput(SDL_Event& event);
+    virtual void end();
 protected:
     std::list<GameObject*> objects;
+    App* app;
 };
+#endif

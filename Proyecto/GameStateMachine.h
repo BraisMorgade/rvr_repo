@@ -1,19 +1,18 @@
-#pragma once
+#ifndef GameStateMachine_h
+#define GameStateMachine_h
 #include <map>
-
+class App;
 class GameState;
 
 class GameStateMachine{
 public:
+    GameStateMachine(App * ap);
     ~GameStateMachine();
-    static GameStateMachine* getInstance();
     GameState* getCurrentState();
     void changeState(std::string state);
 private:
-    GameStateMachine();
-    GameStateMachine(GameStateMachine &) = delete;
-    GameStateMachine & operator=(const GameStateMachine &)=delete;
     GameState* currentState;
     std::map<std::string, GameState*> states;
-    static GameStateMachine* instance;
+    App* app;
 };
+#endif

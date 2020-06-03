@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GameObject_h
+#define GameObject_h
 #include <SDL2/SDL.h>
 class GameObject{
 public:
@@ -9,3 +10,4 @@ public:
     virtual void render()=0;
     virtual void handleInput(SDL_Event& event)=0;
 };
+#endif

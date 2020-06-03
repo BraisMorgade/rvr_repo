@@ -1,19 +1,19 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp App.h GameObject.h GameObjectTest.h GameState.h GameStateTest.h GameStateMachine.h App.cpp GameObjectTest.cpp GameStateMachine.cpp GameStateTest.cpp GameState.cpp
+OBJS = main.cpp App.cpp GameStateMachine.cpp GameStateTest.cpp GameObjectTest.cpp GameState.cpp
 
 #CC specifies which compiler we're using
 CC = g++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-CFLAGS = -g -l. -std=c++11
+CFLAGS = -g -std=c++11
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL2 -lSDL2_image
+LINKER_FLAGS = -lSDL2 -lSDL2_image -g
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = main
 
 #This is the target that compiles our executable
 all : $(OBJS)
-	$(CC) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+	$(CC) $(OBJS) $(CFLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
