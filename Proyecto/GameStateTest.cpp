@@ -9,8 +9,3 @@ GameStateTest::GameStateTest(App* ap): GameState(ap){
 GameStateTest::~GameStateTest(){
 
 }
-
-void GameStateTest::render(SDL_Renderer* render){
-    objects.back()->render();
-    SDL_RenderPresent(render);
-}
