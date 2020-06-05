@@ -7,6 +7,7 @@ App::App()
     quit = false;
     render = nullptr;
     window = nullptr;
+    gravity= b2Vec2(0.0f, 10.0f);
 }
 
 App::~App()
@@ -30,6 +31,7 @@ void App::run(std::string appName)
 
     SDL_Event event;
 
+    world=new b2World(gravity);
     stateMachine=new GameStateMachine(this);
 
     stateMachine->getCurrentState()->start();
@@ -48,6 +50,7 @@ void App::run(std::string appName)
                 break;
             }
         }
+        world->Step(1.0f/60.0f, 6, 2);
     }
 
     SDL_DestroyRenderer(render);

@@ -9,11 +9,12 @@ CC = g++
 CFLAGS = -g -std=c++11
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL2 -lSDL2_image -g
+LIBS = libbox2d.a
+LINKER_FLAGS = -lSDL2 -lSDL2_image
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = main
 
 #This is the target that compiles our executable
 all : $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
+	$(CC) $(OBJS) $(CFLAGS)  $(LINKER_FLAGS) -o $(OBJ_NAME) $(LIBS)

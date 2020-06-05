@@ -1,17 +1,24 @@
 #ifndef GameObjectTest_h
 #define GameObjectTest_h
 #include "GameObject.h"
+#include "box2d/box2d.h"
+
+class App;
 
 class GameObjectTest : public GameObject{
 public:
-    GameObjectTest(SDL_Renderer* rd, int posx, int posy, int w, int h);
+    GameObjectTest(App* ap, int posx, int posy, int w, int h);
     ~GameObjectTest(){};
     virtual void start() override{};
-    virtual void update() override{};
+    virtual void update() override;
     virtual void render() override;
     virtual void handleInput(SDL_Event& event) override{};
-private:
-    SDL_Renderer* rend;
+protected:
+    App* app;
+    b2Body* body;
+    b2BodyDef bodyDef;
+    b2PolygonShape dynamicBox;
+    b2FixtureDef fixtureDef;
     SDL_Texture* texture;
     int posX, posY;
     int height, width;

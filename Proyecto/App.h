@@ -2,6 +2,7 @@
 #define App_h
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "box2d/box2d.h"
 #include <string.h>
 #include <iostream>
 
@@ -21,11 +22,15 @@ public:
     {
         return render;
     }
-
+    b2World* getWorld(){
+        return world;
+    }
 private:
     bool quit;
     SDL_Window *window;
     SDL_Renderer *render;
+    b2Vec2 gravity;
+    b2World* world;
     GameStateMachine* stateMachine;
 
 };

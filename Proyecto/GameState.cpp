@@ -15,6 +15,7 @@ void GameState::update(){
     }
 }
 void GameState::render(SDL_Renderer* render){
+    SDL_RenderClear(render);
     for(auto o: objects){
         (*o).render();
     }
