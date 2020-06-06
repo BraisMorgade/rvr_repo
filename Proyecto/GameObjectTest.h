@@ -15,12 +15,12 @@ public:
     virtual void handleInput(SDL_Event& event) override{};
 protected:
     App* app;
+    int posX, posY;
+    int height, width;
     b2Body* body;
     b2BodyDef bodyDef;
     b2PolygonShape dynamicBox;
     b2FixtureDef fixtureDef;
     SDL_Texture* texture;
-    int posX, posY;
-    int height, width;
 };
 #endif

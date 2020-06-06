@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     App app;
-    app.run("Juego guapisimo en algun momento en el futuro pero ahora solo es una foto de Kojima");
+    app.run("Juego guapisimo en algun momento en el futuro pero ahora solo es una foto de Kojima que se cae al vacio eternamente");
    
     return 0;
 }

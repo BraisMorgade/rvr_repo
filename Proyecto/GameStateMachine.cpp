@@ -1,12 +1,18 @@
 #include "GameStateMachine.h"
-#include "GameStateTest.h"
+#include "MainMenu.h"
+#include "GameScene.h"
 #include "App.h"
 
 GameStateMachine::GameStateMachine(App* ap){
     app=ap;
-    GameState* aux= new GameStateTest(ap);
-    states.emplace("test", aux);
-    currentState=aux;
+
+    GameState* menu= new MainMenu(app);
+    GameState* game= new GameScene(app);
+    
+    states.emplace("menu", menu);
+    states.emplace("game", game);
+
+    currentState=menu;
 }
 
 GameStateMachine::~GameStateMachine(){

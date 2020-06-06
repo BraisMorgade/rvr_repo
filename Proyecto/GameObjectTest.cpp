@@ -3,10 +3,8 @@
 #include "App.h"
 #include "box2d/b2_world.h"
 
-GameObjectTest::GameObjectTest(App* ap, int posx, int posy, int w, int h)
+GameObjectTest::GameObjectTest(App* ap, int posx, int posy, int w, int h):GameObject(ap)
 {
-
-    app=ap;
     texture = nullptr;
     posX = posx;
     posY = posy;

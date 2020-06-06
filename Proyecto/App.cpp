@@ -35,8 +35,11 @@ void App::run(std::string appName)
     stateMachine=new GameStateMachine(this);
 
     stateMachine->getCurrentState()->start();
+    float stepTime=1.0f/60.0f;
+
     while (!quit)
     {
+        Uint32 time=SDL_GetTicks();
         stateMachine->getCurrentState()->update();
         stateMachine->getCurrentState()->render(render);
         while(SDL_PollEvent(&event)){
@@ -50,45 +53,12 @@ void App::run(std::string appName)
                 break;
             }
         }
-        world->Step(1.0f/60.0f, 6, 2);
+        world->Step(stepTime, 6, 2);
+
+        stepTime=(float)(SDL_GetTicks()-time)/1000.0f;
     }
 
     SDL_DestroyRenderer(render);
     SDL_DestroyWindow(window);
     SDL_Quit();
-
-    /*
-    SDL_Surface *surface = IMG_Load("koji.jpeg");
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    
-    // Check that the window was successfully made
-    if (window == NULL)
-    {
-        // In the event that the window could not be made...
-        std::cout << "Could not create window: " << SDL_GetError() << '\n';
-        quit=true;
-    }
-
-    SDL_Event event;
-
-    while (!quit)
-    {
-        SDL_WaitEvent(&event);
-
-        switch (event.type)
-        {
-        case SDL_QUIT:
-            quit = true;
-            break;
-        }
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-        
-    }
-    SDL_DestroyTexture(texture);
-    SDL_FreeSurface(surface);
-    SDL_DestroyRenderer(render);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    */
 }
