@@ -8,7 +8,7 @@ GameStateMachine::GameStateMachine(App* ap){
 
     GameState* menu= new MainMenu(app);
     GameState* game= new GameScene(app);
-    
+
     states.emplace("menu", menu);
     states.emplace("game", game);
 
@@ -22,7 +22,6 @@ GameStateMachine::~GameStateMachine(){
 void GameStateMachine::changeState(std::string state){
     currentState->end();
     currentState=states[state];
-    currentState->start();
 }
 
 GameState* GameStateMachine::getCurrentState(){

@@ -25,6 +25,9 @@ public:
     b2World* getWorld(){
         return world;
     }
+    GameStateMachine* getStateMachine(){
+        return stateMachine;
+    }
 private:
     bool quit;
     SDL_Window *window;
