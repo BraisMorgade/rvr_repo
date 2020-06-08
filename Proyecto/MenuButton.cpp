@@ -13,9 +13,11 @@ void MenuButton::handleInput(SDL_Event& event){
     && event.button.button==SDL_BUTTON_LEFT){
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
-        if(mouseX>=posX && mouseX<=posX+width 
-        && mouseY>=posY && mouseY<= posY+height){
-            std::cout<<"Cambio de estado"<<std::endl;
+        if(mouseX>=posX-width/2 && mouseX<=posX+width/2 
+        && mouseY>=posY-height/2 && mouseY<= posY+height/2){
+            std::cout<<"posy: "<< posY<<std::endl;
+            std::cout<<"mouseY: "<< mouseY<<std::endl;
+            
             app->getStateMachine()->changeState("game");
         }
     }

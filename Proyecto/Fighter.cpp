@@ -1,4 +1,5 @@
 #include "Fighter.h"
+#include <math.h>
 
 Fighter::Fighter(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type)
 :PhysicsObject(ap, posx, posy, w, h, image, type){
@@ -6,21 +7,44 @@ Fighter::Fighter(App* ap, int posx, int posy, int w, int h, std::string image, B
     in.right=false;
     in.up=false;
     in.down=false;
+    jumpState=FALLING;
 }
 
 void Fighter::update(){
     PhysicsObject::update();
-    if(in.up){
-        body->SetLinearVelocity(b2Vec2(0, -1));
-    }
-    else if(in.right){
-        body->SetLinearVelocity(b2Vec2(1,0));
-    }
-    else if(in.left){
-        body->SetLinearVelocity(b2Vec2(-1,0));
-    }
-    else{
-        body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
+    switch(jumpState){
+        case GROUNDED:
+            if(in.up){
+                if(in.right)
+                    body->SetLinearVelocity(b2Vec2(1, -5));
+                else if(in.left)
+                    body->SetLinearVelocity(b2Vec2(-1, -5));
+                else
+                    body->SetLinearVelocity(b2Vec2(0, -5));
+
+                jumpState=RISING;
+            }
+            else if(in.right)
+                body->SetLinearVelocity(b2Vec2(1,0));
+            else if(in.left)
+                body->SetLinearVelocity(b2Vec2(-1,0));
+            else
+                body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
+            break;
+        case FALLING:
+            if(abs(body->GetLinearVelocity().y)<=0.05)
+                jumpState=GROUNDED;
+            break;
+        case RISING:
+            if(abs(body->GetLinearVelocity().y)<=0.05)
+                jumpState=APEX;
+            break;
+        case APEX:
+            if(abs(body->GetLinearVelocity().y)>0.05)
+                jumpState=FALLING;
+            break;
+        default:
+            break;
     }
 }
 
@@ -44,4 +68,5 @@ void Fighter::handleInput(SDL_Event& event){
                 break;
         }
     }
+    //enviar Input al otro cliente
 }

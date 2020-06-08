@@ -9,6 +9,13 @@ struct Inputs{
     bool down;
 };
 
+enum JumpState{
+    GROUNDED,
+    RISING,
+    APEX,
+    FALLING
+};
+
 
 class Fighter: public PhysicsObject{
 public:
@@ -18,6 +25,8 @@ public:
     virtual void handleInput(SDL_Event& event) override;
 private:
     Inputs in;
+    JumpState jumpState;
+    float jumpSpeed;
 };
 
 
