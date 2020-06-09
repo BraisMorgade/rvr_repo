@@ -9,6 +9,7 @@ class MainMenu: public GameState{
 public:
     MainMenu(App* ap);
     ~MainMenu();
+    virtual void start();
 };
 
 #endif

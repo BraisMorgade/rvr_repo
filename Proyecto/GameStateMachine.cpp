@@ -22,6 +22,7 @@ GameStateMachine::~GameStateMachine(){
 void GameStateMachine::changeState(std::string state){
     currentState->end();
     currentState=states[state];
+    currentState->start();
 }
 
 GameState* GameStateMachine::getCurrentState(){

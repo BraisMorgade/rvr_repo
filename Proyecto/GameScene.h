@@ -6,5 +6,6 @@ class GameScene: public GameState{
 public:
     GameScene(App* ap);
     ~GameScene();
+    virtual void start() override;
 };
 #endif
