@@ -14,6 +14,7 @@ public:
     virtual void render(SDL_Renderer* render);
     virtual void handleInput(SDL_Event& event);
     virtual void end();
+    virtual void destroyReadyEntities();
 protected:
     std::list<GameObject*> objects;
     App* app;

@@ -6,7 +6,7 @@
 class RenderableObject: public GameObject{
 public:
     RenderableObject(App* ap, int posx, int posy, int w, int h, std::string image);
-    ~RenderableObject(){};
+    virtual ~RenderableObject(){};
     virtual void render()override;
 protected:
     int posX, posY;

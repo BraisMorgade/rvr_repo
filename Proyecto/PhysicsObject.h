@@ -14,7 +14,7 @@ enum BodyType{
 class PhysicsObject: public RenderableObject{
 public:
     PhysicsObject(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type);
-    ~PhysicsObject();
+    virtual ~PhysicsObject();
     virtual void update() override;
     virtual void handleInput(SDL_Event& event) override;
 protected:

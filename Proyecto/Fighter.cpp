@@ -70,3 +70,6 @@ void Fighter::handleInput(SDL_Event& event){
     }
     //enviar Input al otro cliente
 }
+
+Fighter::~Fighter(){
+}

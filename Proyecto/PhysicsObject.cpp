@@ -43,3 +43,8 @@ void PhysicsObject::handleInput(SDL_Event& event){
         }
     }
 }
+
+PhysicsObject::~PhysicsObject(){
+    app->getWorld()->DestroyBody(body);
+    body=nullptr;
+}

@@ -27,5 +27,20 @@ void GameState::handleInput(SDL_Event& event){
     }
 }
 void GameState::end(){
-    
+    for(auto o:objects){
+        (*o).readyToDestroy(true);
+    }
+}
+
+void GameState::destroyReadyEntities(){
+    auto ind=objects.begin();
+    while(ind!=objects.end()){
+        auto aux = ind;
+        aux++;
+        if((*ind)->isReadyToDestroy()){
+            delete *ind;
+            objects.erase(ind);
+        }
+        ind=aux;
+    }
 }

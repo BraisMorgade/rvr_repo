@@ -36,12 +36,12 @@ void App::run(std::string appName)
 
     stateMachine->getCurrentState()->start();
     float stepTime=1.0f/60.0f;
-
+    GameState* currState= stateMachine->getCurrentState();
     while (!quit)
     {
         Uint32 time=SDL_GetTicks();
-        stateMachine->getCurrentState()->update();
-        stateMachine->getCurrentState()->render(render);
+        currState->update();
+        currState->render(render);
         while(SDL_PollEvent(&event)){
             switch (event.type)
             {
@@ -49,13 +49,15 @@ void App::run(std::string appName)
                 quit = true;
                 break;
             default:
-                stateMachine->getCurrentState()->handleInput(event);
+                currState->handleInput(event);
                 break;
             }
         }
+        currState->destroyReadyEntities();
         world->Step(stepTime, 6, 2);
-
-        stepTime=(float)(SDL_GetTicks()-time)/1000.0f;
+        std::cout<<"bodies: "<< world->GetBodyCount()<<std::endl;
+        stepTime = (float)(SDL_GetTicks()-time)/1000.0f;
+        currState=stateMachine->getCurrentState();
     }
 
     SDL_DestroyRenderer(render);
