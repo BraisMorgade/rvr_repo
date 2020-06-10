@@ -21,4 +21,12 @@ void MenuButton::handleInput(SDL_Event& event){
             app->getStateMachine()->changeState("game");
         }
     }
+    else if(event.type==SDL_KEYDOWN){
+        if(event.key.keysym.sym==SDLK_LEFT){
+            ang+=10;
+        }
+        else if(event.key.keysym.sym==SDLK_RIGHT){
+            ang-=10;
+        }
+    }
 }

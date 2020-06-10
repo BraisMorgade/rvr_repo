@@ -11,6 +11,7 @@ public:
 protected:
     int posX, posY;
     int height, width;
+    float ang;
     SDL_Texture* texture;
 };
 

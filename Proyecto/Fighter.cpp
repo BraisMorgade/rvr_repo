@@ -25,9 +25,9 @@ void Fighter::update(){
                 jumpState=RISING;
             }
             else if(in.right)
-                body->SetLinearVelocity(b2Vec2(1,0));
+                body->SetLinearVelocity(b2Vec2(1,body->GetLinearVelocity().y));
             else if(in.left)
-                body->SetLinearVelocity(b2Vec2(-1,0));
+                body->SetLinearVelocity(b2Vec2(-1,body->GetLinearVelocity().y));
             else
                 body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
             break;
