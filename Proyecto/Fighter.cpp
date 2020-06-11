@@ -1,19 +1,23 @@
 #include "Fighter.h"
 #include <math.h>
 
-Fighter::Fighter(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type)
-:PhysicsObject(ap, posx, posy, w, h, image, type){
+Fighter::Fighter(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type, float scaleX, float scaleY, int offsetX, int offsetY, bool debugRender)
+:PhysicsObject(ap, posx, posy, w, h, image, type, scaleX, scaleY, offsetX, offsetY, debugRender){
     in.left=false;
     in.right=false;
     in.up=false;
     in.down=false;
     jumpState=FALLING;
 
+
+    body->SetFixedRotation(true);
+    
     clip= new SDL_Rect;
     clip->x=0;
     clip->y=0;
     clip->w=64;
     clip->h=64;
+
     animationMachine = new AnimationMachine(16, 16, clip);
     AnimInfo info;
     info.beginningX=0;
