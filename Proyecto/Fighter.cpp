@@ -8,10 +8,26 @@ Fighter::Fighter(App* ap, int posx, int posy, int w, int h, std::string image, B
     in.up=false;
     in.down=false;
     jumpState=FALLING;
+
+    clip= new SDL_Rect;
+    clip->x=0;
+    clip->y=0;
+    clip->w=64;
+    clip->h=64;
+    animationMachine = new AnimationMachine(16, 16, clip);
+    AnimInfo info;
+    info.beginningX=0;
+    info.beginningY=0;
+    info.loop=true;
+    info.nframes=4;
+    info.animTime=1.0f;
+    animationMachine->addAnimation("idle", info);
+    animationMachine->playAnimation("idle");
 }
 
 void Fighter::update(){
     PhysicsObject::update();
+    animationMachine->updateAnimation();
     switch(jumpState){
         case GROUNDED:
             if(in.up){

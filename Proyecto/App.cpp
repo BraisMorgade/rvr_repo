@@ -55,7 +55,6 @@ void App::run(std::string appName)
         }
         currState->destroyReadyEntities();
         world->Step(stepTime, 6, 2);
-        std::cout<<"bodies: "<< world->GetBodyCount()<<std::endl;
         stepTime = (float)(SDL_GetTicks()-time)/1000.0f;
         currState=stateMachine->getCurrentState();
     }

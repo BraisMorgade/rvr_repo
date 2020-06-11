@@ -12,7 +12,11 @@ RenderableObject::RenderableObject(App* ap, int posx, int posy, int w, int h, st
     SDL_Surface *surface = IMG_Load(image.c_str());
     if (app->getRender() != nullptr)
         texture = SDL_CreateTextureFromSurface(app->getRender(), surface);
-    
+    clip=nullptr;
+}
+
+RenderableObject::~RenderableObject(){
+    delete clip;
 }
 
 void RenderableObject::render(){
@@ -23,6 +27,9 @@ void RenderableObject::render(){
         SDL_Point center;
         center.x=width/2;
         center.y=height/2;
-        SDL_RenderCopyEx(app->getRender(), texture, NULL, &dstrect, ang, &center, SDL_FLIP_NONE);
+        if(clip==nullptr)
+            SDL_RenderCopyEx(app->getRender(), texture, NULL, &dstrect, ang, &center, SDL_FLIP_NONE);
+        else
+            SDL_RenderCopyEx(app->getRender(), texture, clip, &dstrect, ang, &center, SDL_FLIP_NONE);
     }
 }

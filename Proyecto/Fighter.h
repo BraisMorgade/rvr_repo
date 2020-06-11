@@ -1,6 +1,7 @@
 #ifndef Fighter_h
 #define Fighterh
 #include "PhysicsObject.h"
+#include "AnimationMachine.h"
 
 struct Inputs{
     bool left;
@@ -26,6 +27,7 @@ public:
 private:
     Inputs in;
     JumpState jumpState;
+    AnimationMachine* animationMachine;
     float jumpSpeed;
 };
 

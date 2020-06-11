@@ -6,13 +6,14 @@
 class RenderableObject: public GameObject{
 public:
     RenderableObject(App* ap, int posx, int posy, int w, int h, std::string image);
-    virtual ~RenderableObject(){};
+    virtual ~RenderableObject();
     virtual void render()override;
 protected:
     int posX, posY;
     int height, width;
     float ang;
     SDL_Texture* texture;
+    SDL_Rect* clip;
 };
 
 #endif
