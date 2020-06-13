@@ -11,6 +11,7 @@ struct AnimInfo{
     int nframes;
     float animTime;
     bool loop;
+    int direction;
 };
 
 class AnimationMachine{

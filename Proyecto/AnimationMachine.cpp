@@ -15,6 +15,7 @@ AnimationMachine::~AnimationMachine()
 void AnimationMachine::addAnimation(std::string name, AnimInfo info)
 {
     animations[name] = info;
+
 }
 
 void AnimationMachine::playAnimation(std::string name)
@@ -22,8 +23,15 @@ void AnimationMachine::playAnimation(std::string name)
     currentAnimation = animations[name];
     frame = 0;
     timeSinceLastFrame = SDL_GetTicks()/1000.0f;
-    clip->x = currentAnimation.beginningX;
-    clip->y = currentAnimation.beginningY;
+    if(currentAnimation.direction==-1){
+        clip->x = (currentAnimation.beginningX 
+        + currentAnimation.nframes - 1) * clip->w;
+        clip->y = currentAnimation.beginningY * clip->h;
+    }
+    else{
+        clip->x = currentAnimation.beginningX * clip->w;
+        clip->y = currentAnimation.beginningY * clip->h;
+    }
 }
 
 void AnimationMachine::updateAnimation()
@@ -33,16 +41,23 @@ void AnimationMachine::updateAnimation()
     if (SDL_GetTicks()/1000.0f - timeSinceLastFrame >= frameTime)
     {
         if (frame < currentAnimation.nframes -1){
-            clip->x = (clip->x + clip->w) % (nCols * clip->w);
+            clip->x = clip->x + clip->w * currentAnimation.direction;
             frame++;
             timeSinceLastFrame = SDL_GetTicks()/1000.0f;
 
         }
         else if(currentAnimation.loop){
-            frame=0;
+            frame = 0;
             timeSinceLastFrame = SDL_GetTicks()/1000.0f;
-            clip->x=currentAnimation.beginningX;
-            clip->y=currentAnimation.beginningY;
+            if(currentAnimation.direction==-1){
+                clip->x = (currentAnimation.beginningX 
+                + currentAnimation.nframes - 1) * clip->w;
+                clip->y = currentAnimation.beginningY * clip->h;
+            }
+            else{
+                clip->x = currentAnimation.beginningX * clip->w;
+                clip->y = currentAnimation.beginningY * clip->h;
+            }
         }
 
     }

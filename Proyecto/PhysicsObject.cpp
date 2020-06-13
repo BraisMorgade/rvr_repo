@@ -50,8 +50,7 @@ void PhysicsObject::update()
 
 void PhysicsObject::render()
 {
-     if (renderCollision)
-    {
+    if (renderCollision){
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
         SDL_Rect dstrect = {posX + offset.x - width*scale.x / 2, posY + offset.y - height * scale.y / 2, width* scale.x, height * scale.y};
         SDL_Point center;

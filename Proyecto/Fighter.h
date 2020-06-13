@@ -17,6 +17,12 @@ enum JumpState{
     FALLING
 };
 
+enum MovState{
+    STILL,
+    WALKING_FORWARD,
+    WALKING_BACKWARDS
+};
+
 
 class Fighter: public PhysicsObject{
 public:
@@ -27,8 +33,18 @@ public:
 private:
     Inputs in;
     JumpState jumpState;
+    MovState movementState;
     AnimationMachine* animationMachine;
     float jumpSpeed;
+
+    void handleJumpState();
+    void handleMovementState();
+
+    void jumpStart();
+    void fallStart();
+    void walkForwardStart();
+    void walkBackwardsStart();
+    void idleStart();
 };
 
 
