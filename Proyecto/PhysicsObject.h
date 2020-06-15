@@ -7,7 +7,8 @@
 enum BodyType{
     DYNAMIC,
     STATIC,
-    KINEMATIC
+    KINEMATIC,
+    TRIGGER
 };
 
 
@@ -18,6 +19,8 @@ public:
     virtual void update() override;
     virtual void render() override;
     virtual void handleInput(SDL_Event& event) override;
+    virtual void OnCollisionEnter(PhysicsObject* other){};
+    virtual void OnCollisionExit(PhysicsObject* other) {};
 protected:
     b2Body* body;
     b2BodyDef bodyDef;
@@ -26,6 +29,8 @@ protected:
     SDL_Texture* colTexture;
     b2Vec2 scale;
     b2Vec2 offset;
+    b2Vec2 ORoffset;
     bool renderCollision;
+    void flipBody(bool lookRight);
 };
 #endif

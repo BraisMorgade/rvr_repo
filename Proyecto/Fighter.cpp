@@ -9,7 +9,7 @@ Fighter::Fighter(App *ap, int posx, int posy, int w, int h, std::string image, B
     in.up = false;
     in.down = false;
     jumpState = FALLING;
-    movementState=STILL;
+    movementState = STILL;
 
     body->SetFixedRotation(true);
 
@@ -197,6 +197,8 @@ void Fighter::fallStart()
 
 void Fighter::walkForwardStart()
 {
+    flip = SDL_FLIP_NONE;
+    flipBody(true);
     jumpState = GROUNDED;
     movementState = WALKING_FORWARD;
     animationMachine->playAnimation("walkForward");
@@ -204,6 +206,8 @@ void Fighter::walkForwardStart()
 
 void Fighter::walkBackwardsStart()
 {
+    flip = SDL_FLIP_HORIZONTAL;
+    flipBody(false);
     jumpState = GROUNDED;
     movementState = WALKING_BACKWARDS;
     animationMachine->playAnimation("walkBackwards");

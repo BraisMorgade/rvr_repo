@@ -1,6 +1,7 @@
 #include "App.h"
 #include "GameStateMachine.h"
 #include "GameState.h"
+#include "GameContactListener.h"
 
 App::App()
 {
@@ -34,6 +35,8 @@ void App::run(std::string appName)
     world=new b2World(gravity);
     stateMachine=new GameStateMachine(this);
 
+    world->SetContactListener(new GameContactListener());
+    
     stateMachine->getCurrentState()->start();
     float stepTime=1.0f/60.0f;
     GameState* currState= stateMachine->getCurrentState();

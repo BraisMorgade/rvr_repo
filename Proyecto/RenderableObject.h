@@ -12,6 +12,7 @@ protected:
     int posX, posY;
     int height, width;
     float ang;
+    SDL_RendererFlip flip;
     SDL_Texture* texture;
     SDL_Rect* clip;
 };

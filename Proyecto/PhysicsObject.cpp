@@ -18,6 +18,8 @@ PhysicsObject::PhysicsObject(App *ap, int posx, int posy, int w, int h, std::str
     case STATIC:
         bodyDef.type = b2_staticBody;
         break;
+    case TRIGGER:
+        bodyDef.type=b2_kinematicBody;
     default:
         break;
     }
@@ -25,16 +27,20 @@ PhysicsObject::PhysicsObject(App *ap, int posx, int posy, int w, int h, std::str
     scale.y=scaleY;
     offset.x=offsetX;
     offset.y=offsetY;
+    ORoffset=offset;
     bodyDef.position.Set(((float)posX + offset.x) / 100.0f, ((float)posY + offset.y) / 100.0f);
     body = app->getWorld()->CreateBody(&bodyDef);
     shape.SetAsBox((float)w * scale.x/ 100.0f / 2.0f, (float)h *scale.y/ 100.0f / 2.0f);
     fixtureDef.shape = &shape;
+    if(type == TRIGGER)
+        fixtureDef.isSensor=true;
     if (type == DYNAMIC)
     {
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.3f;
     }
     body->CreateFixture(&fixtureDef);
+    body->SetUserData(this);
     renderCollision = debugRender;
     colTexture = SDL_CreateTextureFromSurface(app->getRender(), IMG_Load("ColDebug.png"));
 }
@@ -78,4 +84,13 @@ PhysicsObject::~PhysicsObject()
 {
     app->getWorld()->DestroyBody(body);
     body = nullptr;
+}
+
+void PhysicsObject::flipBody(bool lookRight)
+{
+    if(lookRight)
+        offset.x=ORoffset.x;
+    else 
+        offset.x=-ORoffset.x;
+    body->SetTransform(b2Vec2(((float)posX + offset.x) / 100.0f, ((float)posY + offset.y) / 100.0f), body->GetAngle());
 }

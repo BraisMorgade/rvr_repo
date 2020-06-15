@@ -9,10 +9,13 @@ RenderableObject::RenderableObject(App* ap, int posx, int posy, int w, int h, st
     width=w;
     height=h;
     texture = nullptr;
-    SDL_Surface *surface = IMG_Load(image.c_str());
-    if (app->getRender() != nullptr)
-        texture = SDL_CreateTextureFromSurface(app->getRender(), surface);
-    clip=nullptr;
+    if(image!=""){
+        SDL_Surface *surface = IMG_Load(image.c_str());
+        if (app->getRender() != nullptr)
+            texture = SDL_CreateTextureFromSurface(app->getRender(), surface);
+        clip=nullptr;
+    }
+    flip=SDL_FLIP_NONE;
 }
 
 RenderableObject::~RenderableObject(){
@@ -28,8 +31,8 @@ void RenderableObject::render(){
         center.x=width/2;
         center.y=height/2;
         if(clip==nullptr)
-            SDL_RenderCopyEx(app->getRender(), texture, NULL, &dstrect, ang, &center, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(app->getRender(), texture, NULL, &dstrect, ang, &center, flip);
         else
-            SDL_RenderCopyEx(app->getRender(), texture, clip, &dstrect, ang, &center, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(app->getRender(), texture, clip, &dstrect, ang, &center, flip);
     }
 }
