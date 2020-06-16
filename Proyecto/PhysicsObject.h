@@ -18,10 +18,13 @@ public:
     virtual ~PhysicsObject();
     virtual void update() override;
     virtual void render() override;
+    virtual b2Body* getBody(){return body;};
     virtual float getBodyHeight();
     virtual float getBodyWidth();
     virtual void OnCollisionEnter(PhysicsObject* other){};
     virtual void OnCollisionExit(PhysicsObject* other) {};
+    void flipBody(bool lookRight);
+
 protected:
     b2Body* body;
     b2BodyDef bodyDef;
@@ -32,6 +35,5 @@ protected:
     b2Vec2 offset;
     b2Vec2 ORoffset;
     bool renderCollision;
-    void flipBody(bool lookRight);
 };
 #endif

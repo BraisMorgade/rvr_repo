@@ -8,6 +8,8 @@ public:
     RenderableObject(App* ap, int posx, int posy, int w, int h, std::string image);
     virtual ~RenderableObject();
     virtual void render()override;
+    virtual int getPositionX(){return posX;};
+    virtual int getPositionY(){return posY;};
 protected:
     int posX, posY;
     int height, width;

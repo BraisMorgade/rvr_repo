@@ -11,11 +11,11 @@ enum BoxType{
 
 class HitDetectionBox: public PhysicsObject{
 public:
-    HitDetectionBox(App* ap, int posx, int posy,
-    int w, int h, float scaleX, float scaleY,
+    HitDetectionBox(App* ap, int w, int h, float scaleX, float scaleY,
     int offsetX, int offsetY, bool debugRender, 
     BoxType bType, Fighter* fighter);
 
+    virtual void update()override;
     virtual void OnCollisionEnter(PhysicsObject* other) override;
     virtual void OnCollisionExit(PhysicsObject* other) override;
     virtual ~HitDetectionBox(){};

@@ -1,9 +1,10 @@
 #include "HitDetectionBox.h"
+#include "Fighter.h"
 
-HitDetectionBox::HitDetectionBox(App* ap, int posx, int posy,
-    int w, int h, float scaleX, float scaleY,
+HitDetectionBox::HitDetectionBox(App* ap, int w, int h, 
+    float scaleX, float scaleY,
     int offsetX, int offsetY, bool debugRender, 
-    BoxType bType, Fighter* fighter): PhysicsObject(ap, posx, posy, w, h,
+    BoxType bType, Fighter* fighter): PhysicsObject(ap, fighter->getPositionX(), fighter->getPositionY(), w, h,
     "", TRIGGER, scaleX, scaleY, offsetX, offsetY, debugRender){
 
     fg=fighter;
@@ -27,4 +28,12 @@ void HitDetectionBox::OnCollisionEnter(PhysicsObject* other){
 
 void HitDetectionBox::OnCollisionExit(PhysicsObject* other){
 
+}
+
+void HitDetectionBox::update(){
+    PhysicsObject::update();
+    posX=fg->getPositionX();
+    posY=fg->getPositionY();
+    body->SetTransform(b2Vec2((float)(fg->getPositionX() + offset.x)/100.0f,
+    (float)(fg->getPositionY() + offset.y)/100.0f), body->GetAngle());
 }

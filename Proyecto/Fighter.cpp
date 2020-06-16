@@ -25,16 +25,25 @@ Fighter::Fighter(App *ap, int posx, int posy, int w, int h, std::string image, B
 
     animationMachine = new AnimationMachine(16, 16, clip);
 
+    hurtbox=new HitDetectionBox(app, 30, 70, 1, 1, -5, 30, true, HURTBOX, this);
+
     addAnimations();
 }
 
 void Fighter::update()
 {
     PhysicsObject::update();
+    hurtbox->update();
     animationMachine->updateAnimation();
     playerControl();
     updateState();
     groundRayCast();
+}
+
+void Fighter::render()
+{
+    PhysicsObject::render();
+    //hurtbox->render();
 }
 
 void Fighter::handleInput(SDL_Event &event)
@@ -205,88 +214,6 @@ void Fighter::groundRayCast(){
             grounded=true;
     }
 }
-/*
-void Fighter::handleJumpState()
-{
-    switch (jumpState)
-    {
-    case GROUNDED:
-        if (in.up)
-        {
-            if (in.right)
-                body->SetLinearVelocity(b2Vec2(1, -5));
-            else if (in.left)
-                body->SetLinearVelocity(b2Vec2(-1, -5));
-            else
-                body->SetLinearVelocity(b2Vec2(0, -5));
-
-            jumpStart();
-        }
-        else if (in.right)
-            body->SetLinearVelocity(b2Vec2(1, body->GetLinearVelocity().y));
-        else if (in.left)
-            body->SetLinearVelocity(b2Vec2(-1, body->GetLinearVelocity().y));
-        else
-            body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
-        break;
-    case FALLING:
-        if (abs(body->GetLinearVelocity().y) <= 0.05)
-            idleStart();
-        break;
-    case RISING:
-        if (abs(body->GetLinearVelocity().y) <= 0.05)
-            jumpState = APEX;
-        break;
-    case APEX:
-        if (abs(body->GetLinearVelocity().y) > 0.05)
-        {
-            fallStart();
-        }
-        break;
-    default:
-        break;
-    }
-}
-
-void Fighter::handleMovementState()
-{
-    switch (movementState)
-    {
-    case STILL:
-        if (body->GetLinearVelocity().x > 0.05)
-        {
-            walkForwardStart();
-        }
-        else if (body->GetLinearVelocity().x < -0.05)
-        {
-            walkBackwardsStart();
-        }
-        break;
-    case WALKING_BACKWARDS:
-        if (body->GetLinearVelocity().x > 0.05)
-        {
-            walkForwardStart();
-        }
-        else if (abs(body->GetLinearVelocity().x) < 0.05)
-        {
-            idleStart();
-        }
-        break;
-    case WALKING_FORWARD:
-        if (body->GetLinearVelocity().x < -0.05)
-        {
-            walkBackwardsStart();
-        }
-        else if (abs(body->GetLinearVelocity().x) < 0.05)
-        {
-            idleStart();
-        }
-        break;
-    default:
-        break;
-    }
-}
-*/
 
 void Fighter::jumpStart()
 {
@@ -304,6 +231,7 @@ void Fighter::walkForwardStart()
 {
     flip = SDL_FLIP_NONE;
     flipBody(true);
+    hurtbox->flipBody(true);
     state = WALKING_FORWARD;
     animationMachine->playAnimation("walkForward");
 }
@@ -312,6 +240,7 @@ void Fighter::walkBackwardsStart()
 {
     flip = SDL_FLIP_HORIZONTAL;
     flipBody(false);
+    hurtbox->flipBody(false);
     state = WALKING_BACKWARDS;
     animationMachine->playAnimation("walkBackwards");
 }
