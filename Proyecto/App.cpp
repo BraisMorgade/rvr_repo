@@ -36,7 +36,6 @@ void App::run(std::string appName)
     stateMachine=new GameStateMachine(this);
 
     world->SetContactListener(new GameContactListener());
-    
     stateMachine->getCurrentState()->start();
     float stepTime=1.0f/60.0f;
     GameState* currState= stateMachine->getCurrentState();

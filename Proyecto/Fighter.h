@@ -4,25 +4,24 @@
 #include "AnimationMachine.h"
 
 struct Inputs{
-    bool left;
-    bool right;
-    bool up;
-    bool down;
+    bool left=false;
+    bool right=false;
+    bool up=false;
+    bool down=false;
+    bool atk=false;
 };
-
-enum JumpState{
-    GROUNDED,
-    RISING,
-    APEX,
-    FALLING
-};
-
-enum MovState{
+enum MovementState{
     STILL,
     WALKING_FORWARD,
-    WALKING_BACKWARDS
+    WALKING_BACKWARDS,
+    RISING,
+    APEX,
+    FALLING,
+    ATK,
+    J_ATK,
+    FIREBALL,
+    ANTI_AIR
 };
-
 
 class Fighter: public PhysicsObject{
 public:
@@ -32,10 +31,17 @@ public:
     virtual void handleInput(SDL_Event& event) override;
 private:
     Inputs in;
-    JumpState jumpState;
-    MovState movementState;
+    MovementState state;
     AnimationMachine* animationMachine;
     float jumpSpeed;
+    bool grounded;
+    void addAnimations();
+
+    void playerControl();
+
+    void updateState();
+
+    void groundRayCast();
 
     void handleJumpState();
     void handleMovementState();

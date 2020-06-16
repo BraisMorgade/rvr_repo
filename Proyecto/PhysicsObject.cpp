@@ -68,18 +68,6 @@ void PhysicsObject::render()
    
 }
 
-void PhysicsObject::handleInput(SDL_Event &event)
-{
-
-    if (event.type == SDL_KEYDOWN)
-    {
-        if (event.key.keysym.sym == SDLK_ESCAPE)
-        {
-            app->getStateMachine()->changeState("menu");
-        }
-    }
-}
-
 PhysicsObject::~PhysicsObject()
 {
     app->getWorld()->DestroyBody(body);
@@ -93,4 +81,12 @@ void PhysicsObject::flipBody(bool lookRight)
     else 
         offset.x=-ORoffset.x;
     body->SetTransform(b2Vec2(((float)posX + offset.x) / 100.0f, ((float)posY + offset.y) / 100.0f), body->GetAngle());
+}
+
+float PhysicsObject::getBodyHeight(){
+    return height *scale.y/100.0f;
+}
+
+float PhysicsObject::getBodyWidth(){
+    return width * scale.x /100.0f;
 }
