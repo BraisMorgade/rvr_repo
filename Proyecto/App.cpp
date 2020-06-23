@@ -3,17 +3,40 @@
 #include "GameState.h"
 #include "GameContactListener.h"
 
-App::App()
+App::App(const char* s, const char* p, const char* n, const char* pl):socket(s,p), nick(n)
 {
+    localInput=nullptr;
+    remoteInput=nullptr;
     quit = false;
     render = nullptr;
     window = nullptr;
     gravity= b2Vec2(0.0f, 10.0f);
+    std::string str(pl);
+    if(str=="1"){
+        player=1;
+    }
+    else {
+        player=2;
+    }
 }
 
 App::~App()
 {
 }
+
+void App::input_thread(){
+    while(true){
+        if(localInput!=nullptr)
+            socket.send(*localInput, socket);
+    }
+}
+
+void App::net_thread(){
+    while(true){
+        socket.recv(*remoteInput);
+    }
+}
+
 void App::run(std::string appName)
 {
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDL2

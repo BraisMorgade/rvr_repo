@@ -2,10 +2,11 @@
 #define GameObject_h
 #include <SDL2/SDL.h>
 #include <string>
+#include "Serializable.h"
 
 class App;
 
-class GameObject{
+class GameObject: public Serializable{
 public:
     GameObject(App* ap){app=ap; readyDestr=false; tag="Unnamed";};
     virtual ~GameObject(){};
@@ -19,6 +20,11 @@ public:
         readyDestr=ready;
     };
     virtual void handleInput(SDL_Event& event){};
+    virtual void to_bin() override{};
+    virtual int from_bin(char* data) override {
+        return 0;
+    };
+    
 protected:
     App* app;
     bool readyDestr;

@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp App.cpp GameStateMachine.cpp GameObjectTest.cpp GameState.cpp RenderableObject.cpp PhysicsObject.cpp MainMenu.cpp GameScene.cpp MenuButton.cpp Fighter.cpp AnimationMachine.cpp HitDetectionBox.cpp
+OBJS = main.cpp App.cpp GameStateMachine.cpp GameObjectTest.cpp GameState.cpp RenderableObject.cpp PhysicsObject.cpp MainMenu.cpp GameScene.cpp MenuButton.cpp Fighter.cpp AnimationMachine.cpp HitDetectionBox.cpp Socket.cc
 
 #CC specifies which compiler we're using
 CC = g++
@@ -10,7 +10,7 @@ CFLAGS = -g -std=c++11
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LIBS = libbox2d.a
-LINKER_FLAGS = -lSDL2 -lSDL2_image
+LINKER_FLAGS = -lSDL2 -lSDL2_image -lpthread
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = main

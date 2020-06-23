@@ -26,17 +26,20 @@ enum MovementState{
 
 class Fighter: public PhysicsObject{
 public:
-    Fighter(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type, float scaleX, float scaleY, int offsetX, int offsetY, bool debugRender);
+    Fighter(App* ap, int posx, int posy, int w, int h, std::string image, BodyType type, float scaleX, float scaleY, int offsetX, int offsetY, bool debugRender, bool localPlayer);
     ~Fighter();
     virtual void update()override;
     virtual void render()override;
     virtual void handleInput(SDL_Event& event) override;
+    virtual void to_bin() override;
+    virtual int from_bin(char* data) override;
 private:
     Inputs in;
     MovementState state;
     AnimationMachine* animationMachine;
     HitDetectionBox* hitbox;
     HitDetectionBox* hurtbox;
+    bool local;
 
     float jumpSpeed;
     bool grounded;

@@ -6,13 +6,18 @@
 #include <math.h>
 #include <iostream>
 
-Fighter::Fighter(App *ap, int posx, int posy, int w, int h, std::string image, BodyType type, float scaleX, float scaleY, int offsetX, int offsetY, bool debugRender)
+Fighter::Fighter(App *ap, int posx, int posy, int w, int h, std::string image, BodyType type, float scaleX, float scaleY, int offsetX, int offsetY, bool debugRender, bool localPlayer)
     : PhysicsObject(ap, posx, posy, w, h, image, type, scaleX, scaleY, offsetX, offsetY, debugRender)
 {
     in.left = false;
     in.right = false;
     in.up = false;
     in.down = false;
+    local=localPlayer;
+    if(local)
+        app->setLocal(this);
+    else
+        app->setRemote(this);
     state=FALLING;
     grounded=false;
     body->SetFixedRotation(true);
@@ -48,29 +53,31 @@ void Fighter::render()
 
 void Fighter::handleInput(SDL_Event &event)
 {
-    if (event.type == SDL_KEYDOWN || SDL_KEYUP)
-    {
-        bool value = (event.type == SDL_KEYDOWN);
-        switch (event.key.keysym.sym)
+    if(local){
+        if (event.type == SDL_KEYDOWN || SDL_KEYUP)
         {
-        case SDLK_LEFT:
-            in.left = value;
-            break;
-        case SDLK_RIGHT:
-            in.right = value;
-            break;
-        case SDLK_DOWN:
-            in.down = value;
-            break;
-        case SDLK_UP:
-            in.up = value;
-            break;
-        case SDLK_ESCAPE:
-            if(event.type==SDL_KEYDOWN)
-                app->getStateMachine()->changeState("menu");
-            break;
-        default:
-            break;
+            bool value = (event.type == SDL_KEYDOWN);
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_LEFT:
+                in.left = value;
+                break;
+            case SDLK_RIGHT:
+                in.right = value;
+                break;
+            case SDLK_DOWN:
+                in.down = value;
+                break;
+            case SDLK_UP:
+                in.up = value;
+                break;
+            case SDLK_ESCAPE:
+                if(event.type==SDL_KEYDOWN)
+                    app->getStateMachine()->changeState("menu");
+                break;
+            default:
+                break;
+            }
         }
     }
     //enviar Input al otro cliente
@@ -303,4 +310,51 @@ void Fighter::addAnimations()
     info.animTime = 0.5f;
     info.direction = 1;
     animationMachine->addAnimation("groundAttack", info);
+}
+
+void Fighter::to_bin(){
+    alloc_data(sizeof(bool) * 5);
+
+    memset(_data, 0, sizeof(bool) * 5);
+
+    char* tmp = _data;
+
+    memcpy(tmp, &in.left, sizeof(bool));
+    tmp+=sizeof(bool);
+
+    memcpy(tmp, &in.right, sizeof(bool));
+    tmp+=sizeof(bool);
+
+    memcpy(tmp, &in.up, sizeof(bool));
+    tmp+=sizeof(bool);
+
+    memcpy(tmp, &in.down, sizeof(bool));
+    tmp+=sizeof(bool);
+
+    memcpy(tmp, &in.atk, sizeof(bool));
+}
+
+int Fighter::from_bin(char* data){
+    alloc_data(sizeof(bool) * 5);
+
+    memcpy(static_cast<void*>(_data), data, sizeof(bool) * 5);
+
+    char* tmp = _data;
+
+    memcpy(&in.left, tmp, sizeof(bool));
+    tmp += sizeof(bool);
+
+
+    memcpy(&in.right, tmp, sizeof(bool));
+    tmp += sizeof(bool);
+
+    memcpy(&in.up, tmp, sizeof(bool));
+    tmp += sizeof(bool);
+
+    memcpy(&in.down, tmp, sizeof(bool));
+    tmp += sizeof(bool);
+
+    memcpy(&in.atk, tmp, sizeof(bool));
+
+    return 0;
 }
