@@ -14,10 +14,6 @@ Fighter::Fighter(App *ap, int posx, int posy, int w, int h, std::string image, B
     in.up = false;
     in.down = false;
     local=localPlayer;
-    if(local)
-        app->setLocal(this);
-    else
-        app->setRemote(this);
     state=FALLING;
     grounded=false;
     body->SetFixedRotation(true);
@@ -80,7 +76,6 @@ void Fighter::handleInput(SDL_Event &event)
             }
         }
     }
-    //enviar Input al otro cliente
 }
 
 Fighter::~Fighter()

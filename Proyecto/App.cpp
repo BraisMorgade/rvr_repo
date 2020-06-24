@@ -12,14 +12,11 @@ App::App(const char* s, const char* p, const char* n, const char* pl):socket(s,p
     window = nullptr;
     gravity= b2Vec2(0.0f, 10.0f);
     std::string str(pl);
-    remote=nullptr;
     if(str=="1"){
         player=1;
-        socket.bind();
     }
     else {
         player=2;
-        remote=&socket;
     }
 }
 
@@ -29,19 +26,15 @@ App::~App()
 
 void App::input_thread(){
     while(true){
-        if(localInput!=nullptr && remote!=nullptr){
-            socket.send(*localInput, *remote);
-        }
+        if(stateMachine!=nullptr)
+            stateMachine->getCurrentState()->send();
     }
 }
 
 void App::net_thread(){
     while(true){
-        if(remoteInput!=nullptr){
-            Socket* opEnd;
-            socket.recv(*remoteInput, opEnd);
-            remote=opEnd;
-        }
+        if(stateMachine!=nullptr)
+            stateMachine->getCurrentState()->receive();
     }
 }
 

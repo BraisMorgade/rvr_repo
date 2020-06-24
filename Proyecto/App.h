@@ -4,7 +4,6 @@
 #include <SDL2/SDL_image.h>
 #include "box2d/box2d.h"
 #include "Socket.h"
-#include "Serializable.h"
 #include <string.h>
 #include <iostream>
 
@@ -36,14 +35,6 @@ public:
 
     int getPlayer(){
         return player;
-    }
-
-    virtual void setLocal(Serializable* obj){
-        localInput=obj;
-    }
-
-    virtual void  setRemote(Serializable* obj){
-        remoteInput=obj;
     }
 
     virtual void input_thread();
