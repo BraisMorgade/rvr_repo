@@ -58,6 +58,7 @@ private:
     b2World* world;
     GameStateMachine* stateMachine;
     Socket socket;
+    Socket* remote;
     std::string nick;
     int player;
 

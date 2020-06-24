@@ -16,7 +16,6 @@ enum MovementState{
     WALKING_FORWARD,
     WALKING_BACKWARDS,
     RISING,
-    APEX,
     FALLING,
     ATK,
     J_ATK,

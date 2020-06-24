@@ -38,11 +38,8 @@ int Socket::recv(Serializable& obj, Socket*& sock)
     {
         return -1;
     }
-
-    if (sock != 0)
-    {
-        sock = new Socket(&sa, sa_len);
-    }
+    
+    sock = new Socket(&sa, sa_len);
 
     obj.from_bin(buffer);
 

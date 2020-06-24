@@ -39,10 +39,10 @@ void Fighter::update()
 {
     PhysicsObject::update();
     hurtbox->update();
+    groundRayCast();
     animationMachine->updateAnimation();
     playerControl();
     updateState();
-    groundRayCast();
 }
 
 void Fighter::render()
@@ -123,7 +123,6 @@ void Fighter::playerControl()
             body->SetLinearVelocity(b2Vec2(0,body->GetLinearVelocity().y));
         
         break;
-    case APEX:
     case FALLING:
         if (in.atk)
         {
@@ -183,12 +182,6 @@ void Fighter::updateState()
         break;
     case RISING:
         if (abs(body->GetLinearVelocity().y) < 0.05)
-        {
-            state = APEX;
-        }
-        break;
-    case APEX:
-        if (body->GetLinearVelocity().y > 0.05)
         {
             fallStart();
         }
