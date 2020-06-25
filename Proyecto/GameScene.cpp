@@ -2,6 +2,7 @@
 #include "PhysicsObject.h"
 #include "Fighter.h"
 #include "App.h"
+#include "NetMessage.h"
 
 GameScene::GameScene(App* ap): GameState(ap){
 }
@@ -33,14 +34,20 @@ void GameScene::start(){
 
 void GameScene::send(){
     if(localFg!=nullptr && remote!=nullptr){
-        app->getSocket()->send(*localFg, *remote);
+        localFg->to_bin();
+        NetMessage m(NetMessage::INPUT, localFg->data());
+        app->getSocket()->send(m, *remote);
     }
 }
 
 void GameScene::receive(){
     if(remoteFg!=nullptr){
+        NetMessage m;
         Socket* opEnd;
-        app->getSocket()->recv(*remoteFg, opEnd);
-        remote=opEnd;
+        app->getSocket()->recv(m, opEnd);
+        if(m.type==NetMessage::INPUT){
+            remoteFg->from_bin(m.message);
+            remote=opEnd;
+        }
     }
 }
