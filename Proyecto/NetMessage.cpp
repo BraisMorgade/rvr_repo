@@ -39,7 +39,8 @@ int NetMessage::from_bin(char* bobj){
     memcpy(&type, tmp, sizeof(u_int8_t));
     tmp+=sizeof(u_int8_t);
 
-    free(message);
+    if(message!=0)
+        free(message);
     message=(char*)malloc(sizeof(char)*82);
 
     memcpy(message, tmp, sizeof(char)*80);

@@ -24,7 +24,14 @@ public:
     };
 
     NetMessage() {
+        message=(char*)malloc(sizeof(char)*82);
     };
+
+    ~NetMessage(){
+        if(message!=0){
+            free(message);
+        }
+    }
 
     NetMessage(u_int8_t t, char* m) :type(t) {
         message=(char*)malloc(sizeof(char)*82);

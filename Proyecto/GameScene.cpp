@@ -21,22 +21,20 @@ void GameScene::start(){
     if(app->getPlayer()==1){
         localFg=f1;
         remoteFg=f2;
-        app->getSocket()->bind();
     }
     else{
         localFg=f2;
         remoteFg=f1;
-        remote=app->getSocket();
     }
 
 
 }
 
 void GameScene::send(){
-    if(localFg!=nullptr && remote!=nullptr){
+    if(localFg!=nullptr){
         localFg->to_bin();
         NetMessage m(NetMessage::INPUT, localFg->data());
-        app->getSocket()->send(m, *remote);
+        app->getSocket()->send(m, *app->getSocket());
     }
 }
 
@@ -47,7 +45,6 @@ void GameScene::receive(){
         app->getSocket()->recv(m, opEnd);
         if(m.type==NetMessage::INPUT){
             remoteFg->from_bin(m.message);
-            remote=opEnd;
         }
     }
 }

@@ -1,5 +1,6 @@
 #OBJS specifies which files to compile as part of the project
 OBJS = main.cpp App.cpp GameStateMachine.cpp GameObjectTest.cpp GameState.cpp RenderableObject.cpp PhysicsObject.cpp MainMenu.cpp GameScene.cpp MenuButton.cpp Fighter.cpp AnimationMachine.cpp HitDetectionBox.cpp Socket.cc NetMessage.cpp
+SOBJ = ServerMain.cpp Socket.cc NetMessage.cpp Server.cpp
 
 #CC specifies which compiler we're using
 CC = g++
@@ -14,7 +15,12 @@ LINKER_FLAGS = -lSDL2 -lSDL2_image -lpthread
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = main
+SER_NAME = server
 
 #This is the target that compiles our executable
-all : $(OBJS)
+all : c s
+	
+c: $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS)  $(LINKER_FLAGS) -o $(OBJ_NAME) $(LIBS)
+s: $(OBJS)
+	$(CC) $(SOBJ) $(CFLAGS)  $(LINKER_FLAGS) -o $(SER_NAME)
