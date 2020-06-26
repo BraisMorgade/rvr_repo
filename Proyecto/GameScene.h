@@ -16,7 +16,6 @@ private:
 
     Serializable* localFg=nullptr;
     Serializable* remoteFg=nullptr;
-    bool connected=false;
 
     Socket* remote=nullptr;
 };

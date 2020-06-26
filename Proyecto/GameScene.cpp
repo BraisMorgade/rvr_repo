@@ -27,7 +27,6 @@ void GameScene::start(){
         remoteFg=f1;
     }
 
-
 }
 
 void GameScene::send(){

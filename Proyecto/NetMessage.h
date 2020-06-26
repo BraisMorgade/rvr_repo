@@ -18,9 +18,10 @@ public:
     };
     enum MessageType
     {
-        LOGIN = 0,
+        JOIN = 0,
         INPUT = 1,
-        LOGOUT = 2
+        CREATE_ROOM = 2,
+        BEGIN_MATCH = 3
     };
 
     NetMessage() {

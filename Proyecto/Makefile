@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp App.cpp GameStateMachine.cpp GameObjectTest.cpp GameState.cpp RenderableObject.cpp PhysicsObject.cpp MainMenu.cpp GameScene.cpp MenuButton.cpp Fighter.cpp AnimationMachine.cpp HitDetectionBox.cpp Socket.cc NetMessage.cpp
+OBJS = main.cpp App.cpp GameStateMachine.cpp GameObjectTest.cpp GameState.cpp RenderableObject.cpp PhysicsObject.cpp MainMenu.cpp GameScene.cpp MenuButton.cpp Fighter.cpp AnimationMachine.cpp HitDetectionBox.cpp Socket.cc NetMessage.cpp CreateButton.cpp JoinButton.cpp
 SOBJ = ServerMain.cpp Socket.cc NetMessage.cpp Server.cpp
 
 #CC specifies which compiler we're using

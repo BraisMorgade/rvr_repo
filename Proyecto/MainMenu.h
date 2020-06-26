@@ -10,6 +10,10 @@ public:
     MainMenu(App* ap);
     ~MainMenu();
     virtual void start();
+    virtual void send() override;
+    virtual void receive() override;
+    bool joining=false;
+    bool creating=false;
 };
 
 #endif
